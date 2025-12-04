@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>Sticker Shop</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #ffd6ec;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 4px solid #ff8bbd;
+        }
+
+        header img {
+            width: 120px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #d40072;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .products {
+            width: 60%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .product {
+            background: #fff0f7;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 102, 153, 0.2);
+            text-align: center;
+            border: 2px solid #ff8bbd;
+        }
+
+        .product img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+            color: #d92b8f;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #ff8bbd;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #ffb3d7;
+        }
+
+        .cart {
+            width: 30%;
+            background: #fff0f7;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 102, 153, 0.2);
+            border: 2px solid #ff8bbd;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+
+        .clear-btn {
+            background: #ff4f7d;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .clear-btn:hover {
+            background: #ff749a;
+        }
+
+        .back-btn {
+            margin-top: 15px;
+            background: #ff8bbd;
+            width: 100%;
+        }
+
+        .pay-btn {
+            margin-top: 15px;
+            background: #ff52a3;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .pay-btn:hover {
+            background: #ff7fbd;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Logo">
+    <h1>Sticker Shop</h1>
+</header>
+
+<div class="container">
+    <div class="products">
+
+        <!-- PRODUCT 1 -->
+        <div class="product">
+            <img src="IMAGE_LINK_1" alt="Sticker 1">
+            <h3>Sticker 1</h3>
+            <p>Price: 5 NOK</p>
+            <button onclick="addToCart('Sticker 1', 5)">Add to Cart</button>
+        </div>
+
+        <!-- PRODUCT 2 -->
+        <div class="product">
+            <img src="IMAGE_LINK_2" alt="Sticker 2">
+            <h3>Sticker 2</h3>
+            <p>Price: 5 NOK</p>
+            <button onclick="addToCart('Sticker 2', 5)">Add to Cart</button>
+        </div>
+
+        <!-- PRODUCT 3 -->
+        <div class="product">
+            <img src="IMAGE_LINK_3" alt="Sticker 3">
+            <h3>Sticker 3</h3>
+            <p>Price: 5 NOK</p>
+            <button onclick="addToCart('Sticker 3', 5)">Add to Cart</button>
+        </div>
+
+        <!-- PRODUCT 4 -->
+        <div class="product">
+            <img src="IMAGE_LINK_4" alt="Sticker 4">
+            <h3>Sticker 4</h3>
+            <p>Price: 5 NOK</p>
+            <button onclick="addToCart('Sticker 4', 5)">Add to Cart</button>
+        </div>
+
+        <!-- PRODUCT 5 -->
+        <div class="product">
+            <img src="IMAGE_LINK_5" alt="Sticker 5">
+            <h3>Sticker 5</h3>
+            <p>Price: 5 NOK</p>
+            <button onclick="addToCart('Sticker 5', 5)">Add to Cart</button>
+        </div>
+
+    </div>
+
+    <div class="cart">
+        <h2>Cart</h2>
+        <div id="cart-items"></div>
+        <hr>
+        <p><strong>Total: <span id="total">0</span> NOK</strong></p>
+
+        <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+
+        <button class="pay-btn" onclick="alert('Payment system not configured yet 😊')">
+            Pay
+        </button>
+
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            Back to Home
+        </button>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartBox = document.getElementById('cart-items');
+        const totalBox = document.getElementById('total');
+
+        cartBox.innerHTML = "";
+        let total = 0;
+
+        cart.forEach(item => {
+            total += item.price;
+            cartBox.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>${item.price} NOK</span>
+                </div>
+            `;
+        });
+
+        totalBox.textContent = total;
+    }
+
+    function clearCart() {
+        cart = [];
+        updateCart();
+    }
+</script>
+
+</body>
+</html>
